@@ -51,7 +51,7 @@ const READ_ALL_POSTS_ABI = [
   }
 ]
 
-const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0x4309Eb90A37cfD0ecE450305B24a2DE68b73f312"
+const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0x0178d9E3c16179b015e21FB58A3A6Bcc843da5Ca"
 
 export default function HomePage() {
   const [posts, setPosts] = useState<Post[]>([])
@@ -64,9 +64,9 @@ export default function HomePage() {
     setLoading(true)
     try {
       // Use read-only provider to avoid ENS issues
-      const provider = new JsonRpcProvider('https://rpc.testnet.citrea.xyz', {
-        chainId: 5115,
-        name: 'citrea-testnet',
+      const provider = new JsonRpcProvider('https://celo-mainnet.g.alchemy.com/v2/CAhzwSg8fVeW8QVeqjgOz', {
+        chainId: 42220,
+        name: 'celo-mainnet',
       })
       const contract = new Contract(CONTRACT_ADDRESS, READ_ALL_POSTS_ABI, provider)
           
@@ -91,39 +91,6 @@ export default function HomePage() {
       console.error("Failed to fetch posts from blockchain:", error)
       // Fallback to mock data on error
       const mockPosts: Post[] = [
-            {
-              id: "1",
-              author: "0x742d...4567",
-              authorAddress: "0x742d35Cc6634C0532925a3b8D0f4E6f8b1234567",
-              achievement: "Completed my first marathon!",
-              description:
-                "After 6 months of training, I finally completed the NYC Marathon in 4:15:32. The feeling of crossing that finish line was incredible!",
-              timestamp: "2024-01-10T10:30:00Z",
-              tips: 12,
-              tipAmount: 0.25,
-            },
-            {
-              id: "2",
-              author: "0x8ba1...def8",
-              authorAddress: "0x8ba1f109551bD432803012645Hac136c8abcdef8",
-              achievement: "Launched my startup",
-              description:
-                "Today marks the official launch of my SaaS platform. It took 2 years of development, but we finally made it to market!",
-              timestamp: "2024-01-09T15:45:00Z",
-              tips: 8,
-              tipAmount: 0.18,
-            },
-            {
-              id: "3",
-              author: "0x123a...bcde",
-              authorAddress: "0x123a4567890123456789012345678901234abcde",
-              achievement: "Lost 30 pounds",
-              description:
-                "Reached my weight loss goal through consistent diet and exercise. Feeling healthier and more confident than ever!",
-              timestamp: "2024-01-08T09:20:00Z",
-              tips: 15,
-              tipAmount: 0.32,
-            },
       ]
       setPosts(mockPosts)
     } finally {
