@@ -31,7 +31,6 @@ export default function VerifyPage() {
         endpointType: "https",
         userIdType: "uuid",
         userDefinedData: "Welcome to TipCelo!",
-        devMode: true,
         disclosures: {
           minimumAge: 8,
           ofac: false,
