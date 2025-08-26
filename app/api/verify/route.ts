@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
 
     const selfBackendVerifier = new SelfBackendVerifier(
       "tipcelo",
-      "https://703bd32c8194.ngrok-free.app/api/verify",
+      "https://tip-celo.vercel.app/api/verify",
       true, // dev mode
       AllIds,
       configStore,

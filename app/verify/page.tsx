@@ -25,7 +25,7 @@ export default function VerifyPage() {
         version: 2,
         appName: "TipCelo",
         scope: "tipcelo",
-        endpoint: "https://703bd32c8194.ngrok-free.app/api/verify",
+        endpoint: "https://tip-celo.vercel.app/api/verify",
         logoBase64: "https://i.postimg.cc/mrmVf9hm/self.png",
         userId: newUserId,
         endpointType: "https",
