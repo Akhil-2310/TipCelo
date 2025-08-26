@@ -15,20 +15,20 @@ const metadata = {
   icons: ['https://tipcit.app/favicon.ico']
 }
 
-// 4. Define Citrea Testnet
-const citreaTestnet = {
-  id: 5115,
-  name: 'Citrea Testnet',
+
+const celo = {
+  id: 42220,
+  name: 'Celo',
   nativeCurrency: {
-    name: 'Citrea Bitcoin',
-    symbol: 'cBTC',
+    name: 'Celo',
+    symbol: 'CELO',
     decimals: 18
   },
   rpcUrls: {
-    default: { http: ['https://rpc.testnet.citrea.xyz'] }
+    default: { http: ['https://celo-mainnet.g.alchemy.com/v2/CAhzwSg8fVeW8QVeqjgOz'] }
   },
   blockExplorers: {
-    default: { name: 'Citrea Explorer', url: 'https://explorer.testnet.citrea.xyz' }
+    default: { name: 'Celo Explorer', url: 'https://explorer.celo.org' }
   }
 }
 
@@ -36,12 +36,12 @@ const citreaTestnet = {
 createAppKit({
   adapters: [ethersAdapter],
   projectId,
-  networks: [citreaTestnet],
-  defaultNetwork: citreaTestnet,
+  networks: [celo],
+  defaultNetwork: celo,
   metadata,
   features: {
     analytics: true // Optional - defaults to your Cloud configuration
   }
 })
 
-export { citreaTestnet }
+export { celo }
