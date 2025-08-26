@@ -5,6 +5,7 @@ import type React from "react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Navigation from "@/components/Navigation"
+import VerificationGuard from "@/components/VerificationGuard"
 import { useAppKit, useAppKitAccount, useAppKitProvider } from '@reown/appkit/react'
 import { BrowserProvider, Contract } from 'ethers'
 
@@ -76,64 +77,66 @@ export default function CreatePostPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navigation />
+    <VerificationGuard>
+      <div className="min-h-screen bg-gray-50">
+        <Navigation />
 
-      <main className="max-w-2xl mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Share Your Achievement</h1>
-          <p className="text-gray-600">Tell the community about your accomplishment</p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-sm border p-6">
-          <div className="mb-6">
-            <label htmlFor="achievement" className="block text-sm font-medium text-gray-700 mb-2">
-              What did you achieve?
-            </label>
-            <input
-              type="text"
-              id="achievement"
-              value={achievement}
-              onChange={(e) => setAchievement(e.target.value)}
-              placeholder="e.g., Completed my first marathon, Launched my app, etc."
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
-            />
+        <main className="max-w-2xl mx-auto px-4 py-8">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Share Your Achievement</h1>
+            <p className="text-gray-600">Tell the community about your accomplishment</p>
           </div>
 
-          <div className="mb-6">
-            <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
-              Tell us more about it
-            </label>
-            <textarea
-              id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Share the details of your journey, challenges you overcame, or what this achievement means to you..."
-              rows={4}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-              required
-            />
-          </div>
+          <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-sm border p-6">
+            <div className="mb-6">
+              <label htmlFor="achievement" className="block text-sm font-medium text-gray-700 mb-2">
+                What did you achieve?
+              </label>
+              <input
+                type="text"
+                id="achievement"
+                value={achievement}
+                onChange={(e) => setAchievement(e.target.value)}
+                placeholder="e.g., Completed my first marathon, Launched my app, etc."
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                required
+              />
+            </div>
 
-          <div className="flex gap-4">
-            <button
-              type="button"
-              onClick={() => router.back()}
-              className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={isSubmitting || !achievement.trim() || !description.trim()}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              {isSubmitting ? "Creating on blockchain..." : isConnected ? "Share Achievement" : "Connect Wallet to Share"}
-            </button>
-          </div>
-        </form>
-      </main>
-    </div>
+            <div className="mb-6">
+              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+                Tell us more about it
+              </label>
+              <textarea
+                id="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Share the details of your journey, challenges you overcame, or what this achievement means to you..."
+                rows={4}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                required
+              />
+            </div>
+
+            <div className="flex gap-4">
+              <button
+                type="button"
+                onClick={() => router.back()}
+                className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={isSubmitting || !achievement.trim() || !description.trim()}
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                {isSubmitting ? "Creating on blockchain..." : isConnected ? "Share Achievement" : "Connect Wallet to Share"}
+              </button>
+            </div>
+          </form>
+        </main>
+      </div>
+    </VerificationGuard>
   )
 }

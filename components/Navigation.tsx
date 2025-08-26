@@ -2,17 +2,28 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useVerification } from "@/lib/useVerification"
 // import { useAppKit } from '@reown/appkit/react'
 
 export default function Navigation() {
   const pathname = usePathname()
+  const { isVerified, isLoading } = useVerification()
   // const { open } = useAppKit()
 
   const navItems = [
     { href: "/", label: "Feed", icon: "🏠" },
     { href: "/my-posts", label: "My Posts", icon: "📝" },
-    { href: "/create", label: "Create", icon: "➕" },
+    { 
+      href: isVerified ? "/create" : "/verify", 
+      label: isVerified ? "Create" : "Verify to Create", 
+      icon: isVerified ? "➕" : "🔒" 
+    },
   ]
+
+  // Don't render navigation until verification status is loaded
+  if (isLoading) {
+    return null
+  }
 
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-10">

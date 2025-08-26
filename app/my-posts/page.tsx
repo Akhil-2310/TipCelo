@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
 import PostCard from "@/components/PostCard"
 import Navigation from "@/components/Navigation"
+import VerificationGuard from "@/components/VerificationGuard"
 import { useAppKitAccount } from '@reown/appkit/react'
 import { JsonRpcProvider, Contract } from 'ethers'
 
@@ -108,65 +109,67 @@ export default function MyPostsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navigation />
+    <VerificationGuard>
+      <div className="min-h-screen bg-gray-50">
+        <Navigation />
 
-      <main className="max-w-2xl mx-auto px-4 py-8">
-        <div className="mb-8 flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">My Posts</h1>
-            <p className="text-gray-600">Your shared achievements</p>
-          </div>
-          <div className="flex gap-3">
-            <button
-              onClick={handleRefresh}
-              disabled={loading}
-              className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 disabled:opacity-50 transition-colors"
-            >
-              {loading ? "Loading..." : "🔄 Refresh"}
-            </button>
-            <Link
-              href="/create"
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              New Post
-            </Link>
-          </div>
-        </div>
-
-        {loading ? (
-          <div className="text-center py-12">
-            <p className="text-gray-500">Loading your posts...</p>
-          </div>
-        ) : (
-          <>
-            <div className="space-y-6">
-              {myPosts.map((post) => (
-                <PostCard key={post.id} post={post} isOwn={true} />
-              ))}
+        <main className="max-w-2xl mx-auto px-4 py-8">
+          <div className="mb-8 flex justify-between items-center">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">My Posts</h1>
+              <p className="text-gray-600">Your shared achievements</p>
             </div>
+            <div className="flex gap-3">
+              <button
+                onClick={handleRefresh}
+                disabled={loading}
+                className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 disabled:opacity-50 transition-colors"
+              >
+                {loading ? "Loading..." : "🔄 Refresh"}
+              </button>
+              <Link
+                href="/create"
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                New Post
+              </Link>
+            </div>
+          </div>
 
-            {myPosts.length === 0 && (
-              <div className="text-center py-12">
-                <p className="text-gray-500 mb-4">
-                  {!isConnected 
-                    ? "Connect your wallet to view your posts."
-                    : "You haven't shared any achievements yet."
-                  }
-                </p>
-                {isConnected && (
-                  <Link
-                    href="/create"
-                    className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-                  >
-                    Share Your First Achievement
-                  </Link>
-                )}
+          {loading ? (
+            <div className="text-center py-12">
+              <p className="text-gray-500">Loading your posts...</p>
+            </div>
+          ) : (
+            <>
+              <div className="space-y-6">
+                {myPosts.map((post) => (
+                  <PostCard key={post.id} post={post} isOwn={true} />
+                ))}
               </div>
-            )}
-          </>
-        )}
-      </main>
-    </div>
+
+              {myPosts.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-gray-500 mb-4">
+                    {!isConnected 
+                      ? "Connect your wallet to view your posts."
+                      : "You haven't shared any achievements yet."
+                    }
+                  </p>
+                  {isConnected && (
+                    <Link
+                      href="/create"
+                      className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                      Share Your First Achievement
+                    </Link>
+                  )}
+                </div>
+              )}
+            </>
+          )}
+        </main>
+      </div>
+    </VerificationGuard>
   )
 }

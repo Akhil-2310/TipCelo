@@ -4,7 +4,9 @@ import { useState, useEffect } from "react"
 import PostCard from "@/components/PostCard"
 import Navigation from "@/components/Navigation"
 import { useAppKitAccount } from '@reown/appkit/react'
+import { useVerification } from '@/lib/useVerification'
 import { Contract, JsonRpcProvider } from 'ethers'
+import Link from "next/link"
 
 interface Post {
   id: string
@@ -59,6 +61,7 @@ export default function HomePage() {
   
   // const { walletProvider } = useAppKitProvider('eip155')
   const { address } = useAppKitAccount()
+  const { isVerified, isLoading: verificationLoading } = useVerification()
 
   const fetchAllPosts = async () => {
     setLoading(true)
@@ -112,10 +115,51 @@ export default function HomePage() {
       <Navigation />
 
       <main className="max-w-2xl mx-auto px-4 py-8">
+        {/* Verification Status Banner */}
+        {!verificationLoading && !isVerified && (
+          <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <span className="text-yellow-600">🔒</span>
+                <div>
+                  <p className="text-sm font-medium text-yellow-800">
+                    Verification Required
+                  </p>
+                  <p className="text-sm text-yellow-700">
+                    Verify your identity to create posts and interact with the community
+                  </p>
+                </div>
+              </div>
+              <Link
+                href="/verify"
+                className="px-4 py-2 bg-yellow-600 text-white text-sm font-medium rounded-lg hover:bg-yellow-700 transition-colors"
+              >
+                Verify Now
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {!verificationLoading && isVerified && (
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+            <div className="flex items-center space-x-3">
+              <span className="text-green-600">✅</span>
+              <div>
+                <p className="text-sm font-medium text-green-800">
+                  Identity Verified
+                </p>
+                <p className="text-sm text-green-700">
+                  You can create posts and interact with the community
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="mb-8 flex justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Achievement Feed</h1>
-                            <p className="text-gray-600">Celebrate and support others&apos; accomplishments</p>
+            <p className="text-gray-600">Celebrate and support others&apos; accomplishments</p>
           </div>
           <button
             onClick={handleRefresh}
