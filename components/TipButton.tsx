@@ -69,7 +69,7 @@ export default function TipButton({ postId, authorName, onTipSuccess }: TipButto
       setShowTipModal(false)
 
       // Show success message
-      alert(`Successfully tipped ${tipAmount} cBTC to ${authorName}!`)
+      alert(`Successfully tipped ${tipAmount} CELO to ${authorName}!`)
     } catch (error) {
       console.error("Tip failed:", error)
       alert(`Tip failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
